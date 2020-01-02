@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class ReaderDAO {
 
     public static void insert( Reader reader ) {
-        String sql = "INSERT INTO Readers (reader) VALUES (?)";
+        final String sql = "INSERT INTO Readers (reader) VALUES (?)";
         try (
                 Connection connection = DBUtil.getConnection();
                 PreparedStatement ps = connection.prepareStatement( sql )

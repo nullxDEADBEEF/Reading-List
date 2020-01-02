@@ -7,6 +7,16 @@ public class Book {
     private String author;
     private String description;
 
+    public Book() {}
+
+    public Book( String reader, String isbn, String title, String author, String desc ) {
+        this.reader = reader;
+        this.isbn = isbn;
+        this.title = title;
+        this.author = author;
+        this.description = desc;
+    }
+
     public String getReader() {
         return reader;
     }

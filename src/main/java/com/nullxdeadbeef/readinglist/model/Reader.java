@@ -15,8 +15,8 @@ public class Reader {
         return reader;
     }
 
-    public void setReader( String reader ) {
-        this.reader = reader;
+    public void setReaderName( String readerName ) {
+        this.reader = readerName;
     }
 
     public List<Book> getReadingList() {

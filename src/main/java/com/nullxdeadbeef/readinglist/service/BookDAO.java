@@ -11,8 +11,8 @@ import java.util.List;
 public class BookDAO {
 
     public static void insert( Book book ) {
-        String sql = "INSERT INTO Books (reader_id, isbn, title, author, " +
-                "description) VALUES (LAST_INSERT_ID(), ?, ?, ?, ?)";
+        String sql = "INSERT INTO Books (isbn, title, author, reader_id," +
+                "description) VALUES (?, ?, ?, ?, LAST_INSERT_ID())";
 
         try(
                 Connection connection = DBUtil.getConnection();
@@ -32,7 +32,7 @@ public class BookDAO {
     public static List<Book> selectBooksFromReader( String reader ) {
         List<Book> booksOfReader = new ArrayList<>();
 
-        String sql = "SELECT * FROM Books WHERE reader = ?";
+        String sql = "SELECT * FROM Books WHERE reader_id = ?";
 
         try(
                 Connection con = DBUtil.getConnection();
