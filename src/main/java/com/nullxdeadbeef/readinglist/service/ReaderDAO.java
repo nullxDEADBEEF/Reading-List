@@ -8,6 +8,10 @@ import java.sql.SQLException;
 
 public class ReaderDAO {
 
+    /**
+     * inserts a reader into the database
+     * @param reader name of the reader
+     */
     public static void insert( Reader reader ) {
         final String sql = "INSERT INTO Readers (reader) VALUES (?)";
         try (

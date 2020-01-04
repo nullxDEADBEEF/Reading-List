@@ -3,7 +3,6 @@ package com.nullxdeadbeef.readinglist.controller;
 import com.nullxdeadbeef.readinglist.model.Book;
 import com.nullxdeadbeef.readinglist.model.Reader;
 import com.nullxdeadbeef.readinglist.service.BookDAO;
-import com.nullxdeadbeef.readinglist.service.ReaderDAO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +13,14 @@ import javax.servlet.http.HttpSession;
 @RequestMapping( "/user" )
 public class ReadingListController {
 
+    /**
+     * Fetches list of books
+     * @param session current session
+     * @param model the data to put in our view
+     * @param readerName the name of the reader
+     * @param book the book to add
+     * @return the web page showing the list
+     */
     @RequestMapping( "/{readerName}" )
     public String readerBookList( HttpSession session, Model model, @PathVariable String readerName, Book book ) {
         // fetch reading list for the specific reader
@@ -30,6 +37,12 @@ public class ReadingListController {
         session.setAttribute( "book", new Book( reader.getName(), isbn, title, author, desc ) );
     }
 
+    /**
+     * Adds a book to the reading list
+     * @param session current session
+     * @param readerName name of the reader
+     * @return the same reading list page but updated
+     */
     @PostMapping( "/{readerName}" )
     public String addToReadingList( HttpSession session, @PathVariable String readerName ) {
         Book book = (Book)session.getAttribute( "book" );

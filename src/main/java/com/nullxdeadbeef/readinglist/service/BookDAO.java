@@ -10,9 +10,13 @@ import java.util.List;
 
 public class BookDAO {
 
+    /**
+     * Adds a book into the database
+     * @param book the book to add
+     */
     public static void insert( Book book ) {
-        String sql = "INSERT INTO Books (isbn, title, author, reader_id," +
-                "description) VALUES (?, ?, ?, ?, LAST_INSERT_ID())";
+        final String sql = "INSERT INTO Books (isbn, title, author," +
+                "description, reader_id) SELECT ?, ?, ?, ?, id FROM Readers WHERE reader = ?";
 
         try(
                 Connection connection = DBUtil.getConnection();
@@ -23,12 +27,18 @@ public class BookDAO {
             ps.setString( 2, book.getTitle() );
             ps.setString( 3, book.getAuthor() );
             ps.setString( 4, book.getDescription() );
+            ps.setString( 5, book.getReader() );
             ps.executeUpdate();
         } catch ( SQLException ex ) {
             System.err.println( "ERROR: " + ex );
         }
     }
 
+    /**
+     * returns a reading list
+     * @param reader the username of the reader
+     * @return reading list of specified reader
+     */
     public static List<Book> selectBooksFromReader( String reader ) {
         List<Book> booksOfReader = new ArrayList<>();
 

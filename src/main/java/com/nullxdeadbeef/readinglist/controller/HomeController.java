@@ -17,6 +17,12 @@ public class HomeController {
         return "index";
     }
 
+    /**
+     * adds a reader to the database and directs to reading list
+     * @param session current session
+     * @param username name of the reader
+     * @return the redirected url
+     */
     @PostMapping( "/" )
     public String redirectToReadingList( HttpSession session, String username ) {
         Reader reader = new Reader( username, new ArrayList<>() );
