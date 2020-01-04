@@ -4,6 +4,7 @@ import com.nullxdeadbeef.readinglist.model.Book;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class BookDAO {
     public static List<Book> selectBooksFromReader( String reader ) {
         List<Book> booksOfReader = new ArrayList<>();
 
-        String sql = "SELECT * FROM Books WHERE reader_id = ?";
+        String sql = "SELECT * FROM Books LEFT JOIN Readers ON Readers.id = Books.reader_id WHERE reader = ?";
 
         try(
                 Connection con = DBUtil.getConnection();
@@ -50,7 +51,16 @@ public class BookDAO {
                 )
         {
             ps.setString( 1, reader );
-            ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
+            while ( rs.next() ) {
+                booksOfReader.add( new Book(
+                        rs.getString( "reader" ),
+                        rs.getString( "isbn" ),
+                        rs.getString( "title" ),
+                        rs.getString( "author" ),
+                        rs.getString( "description" )
+                ) );
+            }
         } catch ( SQLException ex ) {
             System.err.println( "ERROR: " + ex );
         }

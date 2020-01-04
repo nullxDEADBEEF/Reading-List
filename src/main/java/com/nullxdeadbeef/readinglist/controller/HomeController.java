@@ -25,9 +25,13 @@ public class HomeController {
      */
     @PostMapping( "/" )
     public String redirectToReadingList( HttpSession session, String username ) {
-        Reader reader = new Reader( username, new ArrayList<>() );
+        Reader reader = ReaderDAO.findReader( username );
+        if ( reader == null ) {
+            reader = new Reader( username, new ArrayList<>() );
+            ReaderDAO.insert( reader );
+        }
+
         session.setAttribute( "reader", reader );
-        ReaderDAO.insert( reader );
 
         return "redirect:/user/" + username;
     }

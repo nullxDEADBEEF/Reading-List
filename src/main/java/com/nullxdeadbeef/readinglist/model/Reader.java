@@ -6,6 +6,8 @@ public class Reader {
     private String reader;
     private List<Book> readingList;
 
+    public Reader() {}
+
     public Reader( String reader, List<Book> readingList ) {
         this.reader = reader;
         this.readingList = readingList;
